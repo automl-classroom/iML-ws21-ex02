@@ -1,0 +1,171 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper,
+            bindingoffset=0.2in,
+            left=0.8in,
+            right=0.8in,
+            top=0.8in,
+            bottom=0.8in,
+            footskip=.25in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[utf8]{amsmath}
+
+\begin{document}
+
+{\noindent\LARGE Exercise 2\par}
+\vspace{8pt}
+{\noindent\huge\textbf{Interpretable Models}}
+\vspace{20pt}
+
+\noindent
+In this exercise, we are going to explore interpretable models. Linear models and decision trees are fitted and critically analyzed.
+
+\vspace{10pt}
+\par\noindent\rule{\textwidth}{0.2pt}
+\begin{itemize}
+    \item You can get a bonus point for this exercise if you pass at least 85\% of the tests. Code is automatically tested after pushing. If your tests fail, either your code is wrong, or you solved the task differently. In the second case, we will manually check your solution.
+    \item Three collected bonus points result in a 0.33 increase of the final grade.
+    \item You are allowed to work in groups with up to three people. The code has to be pushed by
+everyone. Please mention your teammates' GitHub names in a separate file `team.txt`.
+    \item Mention your ErgebnisPIN from the iML lecture inside `ergebnispin.txt`. Do not mention other information like name or matrikelnummer.
+    \item Follow the `README.md` for further instructions.
+    \item Finish this exercise until 27th October 2021.
+\end{itemize}
+\par\noindent\rule{\textwidth}{0.2pt}
+
+
+\section{Plotting}
+
+\noindent Linear models can be explained by their weights, whereas decision trees can be analyzed by computing feature importance. To visualize both weights and feature importance, bar plots are a good choice.\\
+
+\noindent Complete the function \textit{plot\_bar} in the file \textit{plotting.py}. The function should display a bar diagram using \textit{x} (labels) and \textit{y} (values for the labels). Use \textit{utils.styled\_plot.plt}, which is a wrapper of \textit{matplotlib.pyplot}.
+
+
+\section{Linear Models}
+
+\noindent In this section, we are fitting different linear models and plot their weights. Finally, a correlation analysis is done to check if the interpretation of the weights makes sense.\\
+
+\noindent Complete the functions in the file \textit{linear\_models.py}.
+
+\subsection{Linear Regression}
+Fit a linear regression model from sklearn in the function \textit{fit\_linear\_regression}. Use default hyperparameters and return the fitted model.
+
+
+\subsection{Custom Linear Regression}
+Using a sklearn model is straightforward but also hides the information on how the model is actually trained. Therefore, we want to implement a linear regression model exemplary by ourselves.\\
+
+\noindent Fill in both \textit{fit} and \textit{predict} methods inside the class \textit{MyLinearRegression}. Use the following equations below to solve the \textit{fit} method:
+
+\begin{equation}
+    \mathcal{L} = \mathcal{M}(X) - y,
+\end{equation}
+
+\begin{equation}
+    \dfrac{\partial L}{\partial \theta} = \dfrac{X^T \cdot \mathcal{L}}{|y|},
+\end{equation}
+
+\begin{equation}
+    \dfrac{\partial L}{\partial b}  = \dfrac{\sum{\mathcal{L}}}{|y|},
+\end{equation}
+
+\begin{equation}
+    \theta_{i+1} = \theta_{i} - \eta \dfrac{\partial L}{\partial \theta},
+\end{equation}
+
+\begin{equation}
+    b_{i+1} = b_{i} - \eta \dfrac{\partial L}{\partial b}.
+\end{equation}
+
+\noindent The symbols have the following meaning:
+
+\begin{itemize}
+    \item $\mathcal{M}$: Model.
+    \item $\mathcal{M}(\cdot)$: Prediction function.
+    \item $\mathcal{L}$: Loss.
+    \item $y$: Ground truth data.
+    \item $|y|$: Number of elements inside $y$.
+    \item $\theta$: Weights.
+    \item $b$: Bias.
+    \item $\eta$: Learning Rate.
+\end{itemize}
+
+
+\subsection{Plot Weights}
+Use the function \textit{plot\_bar}, which you solved previously, to plot the linear weights of the linear regression models. Fill the function \textit{plot\_linear\_regression\_weights} for that. Have a look inside \textit{utils.dataset.Dataset} to retrieve the x values and access the model's attributes to retrieve the corresponding values. Finally, return x and y.
+
+\subsection{Generalized Linear Model (GLM)}
+A linear regression might not be the best choice for the given dataset because a classification problem is given. Hence, we are looking for a linear model which naturally handles the multi-classification problem. Select and fit a suitable GLM from sklearn and complete the function \textit{fit\_generalized\_linear\_model}.\\
+
+\noindent Hint: Although linear models do not initially support multi-classification problems, workarounds like One-Vs-Rest adapt the models to it.
+
+
+\subsection{Correlation Analysis}
+Since we now know how the weights look like and therefore what features are the most important, we want to find out if those weights are unambiguous. Perform a correlation analysis to check the correlations of a single feature. You can use pandas dataframe and access its correlation function.\\
+
+\noindent Complete the function \textit{correlation\_analysis} and check the docstring for further information.
+
+
+\section{Decision Trees}
+
+In addition to linear models, a decision tree is yet another interpretable model. After fitting and plotting the feature importance, we are going to write the feature importance function by ourselves.\\
+
+\noindent Complete the functions in the file \textit{decision\_trees.py}.
+
+\subsection{Decision Tree}
+
+In the function \textit{fit\_decision\_tree}, you should fit a decision tree from sklearn and fit it with the training data.
+
+\subsection{Plot Feature Importance}
+
+Use the function \textit{plot\_bar} again, to complete \textit{plot\_feature\_importance}. Instead of using the coefficients, you should access the tree's feature importances. Do not forget to set an appropriate y label.
+
+
+\subsection{Compute Feature Importances from Scratch}
+
+We now want to calculate the feature importance from scratch. Decision trees are designed s.t. the impurity $\xi$ (a.k.a gini or entropy) is as low as possible. The feature importance is calculated by the decrease in node impurity weighted by the probability of
+reaching that node. That basically means features often used in the trees have higher importance than features less used.\\
+
+\noindent Mathematically speaking, the feature importance $\mathrm{FI}_j$ for the $j$-th feature can be
+calculated the following way:
+
+\begin{equation}
+\mathrm{FI}_j = \dfrac
+{
+    \sum_{i \in \mathrm{Nodes}_j}
+    \mathrm{\xi}_i \cdot \mathrm{samples}_i -
+    \mathrm{\xi}_{\mathrm{left}(i)} \cdot \mathrm{samples}_{\mathrm{left}(i)} -
+    \mathrm{\xi}_{\mathrm{right}(i)} \cdot \mathrm{samples}_{\mathrm{right}(i)}
+}  
+{
+    \mathrm{samples_0}
+}.
+\end{equation}
+
+\noindent The symbols have the following meaning:
+
+\begin{itemize}
+    \item $\mathrm{Nodes}_j$: Node ids which use $j$-th feature as decision. \
+    \item $\mathrm{left}(i)$: Returns the left node id from the $i$-th node. \
+    \item $\mathrm{right}(i)$: Returns the right node id from the $i$-th node. \
+    \item $\mathrm{samples}_i$: Number of samples from the $i$-th node. The root node is referred to 0.
+\end{itemize}
+
+\noindent Fill the function \textit{compute\_feature\_importance}, in which you have to iterate over \textit{model.tree\_.feature}.
+
+\subsection{Normalize Feature Importances}
+
+After $\mathrm{FI}_j$ has been calculated, the feature importance has to be normalized. Use the accumulated feature importance over all features and calculate the normalized feature importance:
+
+\begin{equation}
+\widetilde{\mathrm{FI}}_j = \dfrac
+{
+    \mathrm{FI}_j
+}
+{
+    \sum_{i \in \mathrm{Features}}{\mathrm{FI}_i}
+}.
+\end{equation}
+
+\noindent Complete the function \textit{normalize\_feature\_importance} and return the feature importance for all features.
+Confirm your results with \textit{model.feature\_importances\_}.
+
+\end{document}
