@@ -16,7 +16,6 @@ def plot_bar(x, y, title=None, ylabel=None):
     """
     
     plt.figure()
-    # Define bar plot here
     
     return plt
 

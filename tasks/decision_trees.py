@@ -66,8 +66,6 @@ def compute_feature_importance(model):
     # Initialize the feature importance with zeros and shape (num_features,)
     feature_importance = np.zeros((num_features,))
     
-    # Add your code here
-    
     return feature_importance
 
 
@@ -81,8 +79,6 @@ def normalize_feature_importance(feature_importance):
     Returns:
         feature_importance (np.ndarray): Normalized feature importances with shape (#features,).
     """
-    
-    # Add your code here
         
     return feature_importance
     
