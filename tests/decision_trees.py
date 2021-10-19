@@ -1,12 +1,11 @@
 import sys
 sys.path.insert(0, ".")
 
-import pytest
 import numpy as np
-import importlib
+import pytest
 
 from utils.dataset import Dataset
-from tests import TEST_DIR
+from tests.config import TEST_DIR
 
 
 dataset = Dataset("wheat_seeds", [0,1,2,3,4,5,6], [7], normalize=True, categorical=True)

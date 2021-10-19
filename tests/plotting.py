@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(0, ".")
 
-from tests import TEST_DIR
+from tests.config import TEST_DIR
 
 
 def test_plotting():
