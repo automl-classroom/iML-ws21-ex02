@@ -133,8 +133,6 @@ class Dataset:
             else:
                 raise NotImplementedError("Impute strategy was not found.")
         
-            
-        
         if normalize:
             scaler = MinMaxScaler()
 

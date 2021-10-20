@@ -2,5 +2,10 @@ pandas
 numpy
 sklearn
 scikit-learn
+jupyter
 matplotlib
 pytest
+tqdm
+torch
+pytorch_lightning
+ConfigSpace
