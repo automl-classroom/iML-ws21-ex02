@@ -59,6 +59,7 @@ def fit_my_linear_regression(X_train, y_train):
         def fit(self, X, y, learning_rate=1e-1, epochs=1000):
             """
             Adapts the coefficients and bias based on the gradients.
+            Coefficients are initialized with zeros.
             
             Parameters:
                 X: Training data. 
