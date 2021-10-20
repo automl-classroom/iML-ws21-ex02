@@ -29,6 +29,4 @@ def test_plotting():
     
     assert ax.get_ylabel() != ""
     assert ax.get_title() != ""
-    
-    for annotation in ax.get_xticklabels():
-        assert annotation._text != ""
+
