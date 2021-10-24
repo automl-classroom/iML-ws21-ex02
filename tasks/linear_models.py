@@ -47,7 +47,7 @@ def fit_my_linear_regression(X_train, y_train):
             self.coef_ = None
             self.bias_ = 0
             
-        def predict(self, X) -> float:
+        def predict(self, X) -> np.ndarray:
             """
             Uses internal coefficients and bias to predict the outcome.
             
